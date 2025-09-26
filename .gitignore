@@ -1,0 +1,16 @@
+# Archivos de Visual Studio
+*.suo
+*.user
+*.config.old
+*.pdb
+*.obj
+*.aps
+*.ncb
+*.bak
+*~
+
+# Directorios de Visual Studio (¡ESTO ES LO MÁS IMPORTANTE!)
+[Bb]in/
+[Oo]bj/
+.vs/
+.idea/
