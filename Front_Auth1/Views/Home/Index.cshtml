@@ -1,39 +1,54 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
-}
+    ViewData["Title"] = "PlasticSys - Inicio";
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-@{
-    ViewData["Title"] = "Home Page";
-
-    // Revisa si la sesión tiene el token JWT (esto es solo un indicador visual)
+    // Revisa si la sesión tiene el token JWT
     bool isAuthenticated = !string.IsNullOrEmpty(Context.Session.GetString("JWToken"));
 }
 
-<div class="text-center">
-    <h1 class="display-4">Bienvenido a PlasticSys</h1>
-    <p>Este es el Front-end de la aplicación de gestión de plásticos.</p>
+@*
+    **ESTILOS PARA EL FONDO GRADIENTE**
+    Aplica un degradado suave de colores limpios (azul/verde) a todo el cuerpo de la página.
+*@
+<style>
+    body {
+        /* Degradado suave de azul claro (cercano al blanco) a un azul verdoso, ideal para temas ecológicos/tecnológicos */
+        background: linear-gradient(135deg, #f0f8ff 0%, #e0f7fa 100%);
+    }
 
-    @if (isAuthenticated)
-    {
-        <div class="alert alert-success mt-4" role="alert">
-            ¡Has iniciado sesión exitosamente!
-        </div>
-        <p class="lead">
-            Puedes acceder a los datos protegidos:
-            <a asp-controller="Usuario" asp-action="Index" class="btn btn-primary mt-2">Ver Lista de Usuarios</a>
-        </p>
+    /* Asegura que el contenido principal esté bien centrado en la página */
+    .hero-content {
+        min-height: 80vh; /* Ocupa el 80% de la altura de la ventana */
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    else
-    {
-        <div class="alert alert-warning mt-4" role="alert">
-            Aún no has iniciado sesión.
-        </div>
-        <p class="lead">
-            Por favor, <a asp-controller="Auth" asp-action="Login">inicia sesión</a> o <a asp-controller="Auth" asp-action="Registrar">regístrate</a> para acceder a la funcionalidad completa.
+</style>
+
+<div class="hero-content">
+    <div class="text-center p-4">
+        <h1 class="display-3 fw-bold mb-4 text-primary">Bienvenido a PlasticSys</h1>
+        <p class="lead text-secondary mx-auto mb-5" style="max-width: 700px;">
+            PlasticSys es la plataforma oficial para la administración y trazabilidad de todos los procesos de reciclaje y fabricación de productos plásticos.
         </p>
-    }
+
+        @if (isAuthenticated)
+        {
+            <div class="alert alert-success mt-4 shadow-sm" role="alert">
+                ¡Has iniciado sesión exitosamente!
+            </div>
+            <a asp-controller="Usuario" asp-action="Index" class="btn btn-primary btn-lg shadow-lg mt-3">
+                <i class="fas fa-users"></i> Ver Lista de Usuarios
+            </a>
+        }
+        else
+        {
+            <div class="alert alert-warning mt-4 shadow-sm" role="alert">
+                Aún no has iniciado sesión.
+            </div>
+            <div class="d-grid gap-2 d-md-block mt-3">
+                <a asp-controller="Auth" asp-action="Login" class="btn btn-success btn-lg shadow">Iniciar Sesión</a>
+                <a asp-controller="Auth" asp-action="Registrar" class="btn btn-outline-primary btn-lg shadow-sm">Registrarse</a>
+            </div>
+        }
+    </div>
 </div>
