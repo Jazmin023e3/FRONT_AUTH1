@@ -6,3 +6,34 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+@{
+    ViewData["Title"] = "Home Page";
+
+    // Revisa si la sesión tiene el token JWT (esto es solo un indicador visual)
+    bool isAuthenticated = !string.IsNullOrEmpty(Context.Session.GetString("JWToken"));
+}
+
+<div class="text-center">
+    <h1 class="display-4">Bienvenido a PlasticSys</h1>
+    <p>Este es el Front-end de la aplicación de gestión de plásticos.</p>
+
+    @if (isAuthenticated)
+    {
+        <div class="alert alert-success mt-4" role="alert">
+            ¡Has iniciado sesión exitosamente!
+        </div>
+        <p class="lead">
+            Puedes acceder a los datos protegidos:
+            <a asp-controller="Usuario" asp-action="Index" class="btn btn-primary mt-2">Ver Lista de Usuarios</a>
+        </p>
+    }
+    else
+    {
+        <div class="alert alert-warning mt-4" role="alert">
+            Aún no has iniciado sesión.
+        </div>
+        <p class="lead">
+            Por favor, <a asp-controller="Auth" asp-action="Login">inicia sesión</a> o <a asp-controller="Auth" asp-action="Registrar">regístrate</a> para acceder a la funcionalidad completa.
+        </p>
+    }
+</div>
