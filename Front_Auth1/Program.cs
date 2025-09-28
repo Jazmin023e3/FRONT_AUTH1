@@ -1,9 +1,14 @@
-using Front_Auth1.Services; // Asegúrate de tener este using
+using Front_Auth1.Services;
+using Front_Auth1.Controllers; // Necesario para UsuariosService
+using System;
+using Microsoft.AspNetCore.Http; // Necesario para IHttpContextAccessor
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// --- INYECCIÓN DE DEPENDENCIAS Y CONFIGURACIÓN ---
 
 // 1. Configuración de la Sesión (para guardar el token)
 builder.Services.AddSession(options =>
@@ -12,16 +17,31 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-// 2. Registrar el Servicio de Autenticación con HttpClient
+
+// 2. Registrar el IHttpContextAccessor (ESENCIAL para leer la sesión en ApiService)
+builder.Services.AddHttpContextAccessor(); // <--- ¡NUEVO!
+
+// 3. Obtener la URL base de configuración
+var apiBaseUrl = builder.Configuration.GetValue<string>("ServiceUrls:APIBase") ?? "https://localhost:7036/";
+
+// 4. Registrar los servicios con HttpClient (para que reciban el HttpClient en el constructor)
+
+// A. Registrar AuthService: Usado para Login/Registro. Ahora el constructor recibirá HttpClient y IHttpContextAccessor
 builder.Services.AddHttpClient<AuthService>(client =>
 {
-    // *** USAMOS EL PUERTO HTTPS 7036 DE TU API ***
-    client.BaseAddress = new Uri("https://localhost:7036/");
+    client.BaseAddress = new Uri(apiBaseUrl);
 });
-// Registrar el servicio de autenticación
-builder.Services.AddScoped<AuthService>();
+
+// B. Registrar UsuariosService: Usado para la lista protegida de usuarios.
+// También necesita HttpClient y IHttpContextAccessor (vía ApiService)
+builder.Services.AddHttpClient<UsuariosService>(client =>
+{
+    client.BaseAddress = new Uri(apiBaseUrl);
+});
 
 var app = builder.Build();
+
+// --- PIPELINE DE MIDDLEWARES ---
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -35,7 +55,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// 3. Agregar el Middleware de Sesión (DEBE ir antes de UseAuthorization)
+// 5. Agregar el Middleware de Sesión (DEBE ir ANTES de UseAuthorization)
 app.UseSession();
 
 app.UseAuthorization();

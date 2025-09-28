@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Front_Auth1.DTOs;
+using Front_Auth1.DTOs; // <- Aquí están tus DTOs (UsuarioLoginDTO, AuthResponseDTO, etc.)
 using Front_Auth1.Services;
 using Microsoft.AspNetCore.Http;
-using Front_Auth1.DTOs.UsuarioDTOs;
+using System.Threading.Tasks; // Necesario para Task
+using System;
+using Front_Auth1.DTOs.UsuarioDTOs; // Necesario para Exception
 
 namespace Front_Auth1.Controllers
 {
@@ -15,6 +17,8 @@ namespace Front_Auth1.Controllers
         {
             _authService = authService;
         }
+
+        // --- LOGIN ---
 
         // [GET] /Auth/Login
         [HttpGet]
@@ -54,9 +58,46 @@ namespace Front_Auth1.Controllers
             {
                 // 4. Mostrar un mensaje de error al usuario
                 ModelState.AddModelError(string.Empty, "Inicio de sesión fallido. Verifique las credenciales.");
+                // Puedes usar esto para depurar, pero no lo muestres al usuario final: 
+                // Console.WriteLine(ex.Message); 
                 return View(model);
             }
         }
+
+        // --- REGISTRO ---
+
+        // [GET] /Auth/Registrar
+        [HttpGet]
+        public IActionResult Registrar()
+        {
+            return View(new UsuarioRegistroDTO());
+        }
+
+        // [POST] /Auth/Registrar
+        [HttpPost]
+        public async Task<IActionResult> Registrar(UsuarioRegistroDTO model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                // Llama al servicio de registro (no necesitamos la respuesta)
+                await _authService.RegisterAsync(model);
+
+                // Redirige al login para que el nuevo usuario inicie sesión
+                return RedirectToAction("Login", "Auth");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty, "Error al registrar el usuario. El email o nombre de usuario ya existe.");
+                return View(model);
+            }
+        }
+
+        // --- LOGOUT ---
 
         // [GET] /Auth/Logout
         [HttpGet]
