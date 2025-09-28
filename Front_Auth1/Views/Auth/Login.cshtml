@@ -1,6 +1,41 @@
-﻿namespace Front_Auth1.Views.Auth
-{
-    public class Login
-    {
+﻿@model Front_Auth1.DTOs.UsuarioLoginDTO
+
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+    // Opcional: Puedes usar un layout vacío para que el login no tenga encabezados/pies de página
+    // Layout = null;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5 card p-4 shadow-sm">
+        <h2 class="card-title text-center mb-4">Acceso al Sistema PlasticSys</h2>
+
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Username" class="form-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    Ingresar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
