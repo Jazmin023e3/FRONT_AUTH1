@@ -70,6 +70,10 @@ namespace Front_Auth1.Controllers
         [HttpGet]
         public IActionResult Registrar()
         {
+            // Asegúrate de que no hay lógica compleja aquí. 
+            // Si tienes alguna lógica que depende de servicios, coméntala temporalmente.
+
+            // Devolvemos el DTO (Front_Auth1.DTOs.UsuarioDTOs.UsuarioRegistroDTO)
             return View(new UsuarioRegistroDTO());
         }
 

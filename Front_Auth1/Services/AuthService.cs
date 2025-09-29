@@ -69,5 +69,10 @@ namespace Front_Auth1.Services
                 throw new Exception($"El registro falló: {errorContent}");
             }
         }
+
+        internal async Task<bool> Registrar(UsuarioRegistroDTO model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
