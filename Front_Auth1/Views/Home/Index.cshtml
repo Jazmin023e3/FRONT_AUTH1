@@ -1,50 +1,62 @@
 ﻿@{
     ViewData["Title"] = "PlasticSys - Inicio";
 
-    // ELIMINADA toda la lógica de autenticación
+    // ELIMINADA toda la lógica de autenticación y sesión
     // bool isAuthenticated = !string.IsNullOrEmpty(Context.Session.GetString("JWToken"));
 }
 
-@*
-    **ESTILOS PARA EL FONDO GRADIENTE**
-    Aplica un degradado suave de colores limpios (azul/verde) a todo el cuerpo de la página.
-*@
 <style>
+    /* 1. Fondo de la página: Degradado Suave Azul a Verde Menta (Limpieza y Ecología) */
     body {
-        /* Degradado suave de azul claro (cercano al blanco) a un azul verdoso, ideal para temas ecológicos/tecnológicos */
-        background: linear-gradient(135deg, #f0f8ff 0%, #e0f7fa 100%);
+        background: linear-gradient(135deg, #e0f7fa 0%, #f0fcfc 100%); /* Azul cielo claro a verde menta suave */
+        color: #333; /* Texto por defecto en gris oscuro */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* Asegura que el contenido principal esté bien centrado en la página */
+    /* Estilo para la barra de navegación para que se integre mejor */
+    /* NOTA: Estos estilos deberían estar en _Layout.cshtml, pero se incluyen para referencia visual */
+    .navbar {
+        background-color: #f0f8ff;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    /* Estilo para el pie de página */
+    .footer {
+        background-color: #f0f8ff;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    /* Centra el contenido principal */
     .hero-content {
-        min-height: 80vh; /* Ocupa el 80% de la altura de la ventana */
+        min-height: 80vh;
         display: flex;
         align-items: center;
         justify-content: center;
     }
+
+        /* Estilos adicionales para los textos del hero */
+        .hero-content h1 {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1); /* Sombra sutil para el título */
+        }
 </style>
 
 <div class="hero-content">
     <div class="text-center p-4">
-        <h1 class="display-3 fw-bold mb-4 text-primary">Bienvenido a PlasticSys</h1>
-        <p class="lead text-secondary mx-auto mb-5" style="max-width: 700px;">
+
+        @* Título: Azul Marino Profundo (#1a5276) *@
+        <h1 class="display-3 fw-bold mb-4" style="color: #1a5276;">Bienvenido a PlasticSys</h1>
+
+        @* Descripción: Gris Azulado Suave (#4a6d8a) *@
+        <p class="lead mx-auto mb-5" style="max-width: 700px; color: #4a6d8a;">
             PlasticSys es la plataforma oficial para la administración y trazabilidad de todos los procesos de reciclaje y fabricación de productos plásticos.
         </p>
 
-        @* AQUÍ ESTARÁ EL CONTENIDO PRINCIPAL DE LA APLICACIÓN (EJ. LAS TABLAS) 
+        @* AQUÍ ESTARÁ EL CONTENIDO PRINCIPAL DE LA APLICACION (EJ. LAS TABLAS) *@
 
-            Como se eliminó la autenticación, ahora puedes mostrar directamente aquí el contenido 
-            que la aplicación debe ver por defecto (por ejemplo, un botón para ver los productos, o las tablas en sí).
-
-            Ejemplo de cómo podrías enlazar a una vista de tablas:
-        *@
-        <a asp-controller="Producto" asp-action="Index" class="btn btn-success btn-lg shadow-lg mt-3">
-            Ver Tablas de Productos
+        @* Botón con Icono: Verde Agua Vibrante (#20b2aa) *@
+        <a asp-controller="Producto" asp-action="Index" class="btn btn-lg shadow-lg mt-3"
+           style="background-color: #20b2aa; border-color: #20b2aa; color: white; padding: 12px 30px; border-radius: 30px; font-weight: bold; transition: background-color 0.3s;">
+            <i class="fa-solid fa-warehouse me-2"></i> Ver Tablas de Productos
         </a>
-
-        @*
-            Se eliminaron por completo los bloques @if (isAuthenticated) y @else 
-            que contenían los mensajes y los botones de Login y Registrar.
-        *@
     </div>
 </div>
