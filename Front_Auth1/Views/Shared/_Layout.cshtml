@@ -1,12 +1,11 @@
-﻿@using Microsoft.AspNetCore.Http
-@inject IHttpContextAccessor HttpContextAccessor
-@{
-    // 1. Verificar si existe el Token JWT en la sesión
-    bool isAuthenticated = !string.IsNullOrEmpty(HttpContextAccessor.HttpContext?.Session.GetString("JWToken"));
-
-    // 2. Opcional: Obtener el nombre de usuario de la sesión para el saludo
-    string username = HttpContextAccessor.HttpContext?.Session.GetString("Username") ?? "Usuario";
-}
+﻿@* @using Microsoft.AspNetCore.Http
+    @inject IHttpContextAccessor HttpContextAccessor
+    @{
+        // 1. ELIMINADA la lógica de autenticación
+        // bool isAuthenticated = !string.IsNullOrEmpty(HttpContextAccessor.HttpContext?.Session.GetString("JWToken"));
+        // string username = HttpContextAccessor.HttpContext?.Session.GetString("Username") ?? "Usuario";
+    } 
+*@
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,45 +27,22 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 
-                    <!-- ENLACES PRINCIPALES -->
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
 
-                        @if (isAuthenticated)
-                        {
-                            <!-- ENLACE PROTEGIDO: Solo visible si el usuario está logueado -->
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Lista de Usuarios</a>
-                            </li>
-                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Lista de Usuarios</a>
+                        </li>
                     </ul>
 
-                    <!-- ENLACES DE AUTENTICACIÓN (Derecha) -->
                     <ul class="navbar-nav">
-                        @if (isAuthenticated)
-                        {
-                            <li class="nav-item nav-link text-dark">
-                                <strong>Hola, @username!</strong>
-                            </li>
-                            <li class="nav-item">
-                                <!-- Botón de Logout -->
-                                <a class="btn btn-outline-danger" asp-area="" asp-controller="Auth" asp-action="Logout">
-                                    Cerrar Sesión
-                                </a>
-                            </li>
-                        }
-                        else
-                        {
-                            <!-- Enlaces de Login y Registro -->
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Registrar">Registrar</a>
-                            </li>
-                        }
+                        @*
+                            Aquí estaban los bloques de @if (isAuthenticated) y @else 
+                            con los enlaces de Hola, [Usuario], Cerrar Sesión, Login y Registrar.
+                            Se han eliminado para quitar toda la funcionalidad de autenticación en la UI.
+                        *@
                     </ul>
                 </div>
             </div>

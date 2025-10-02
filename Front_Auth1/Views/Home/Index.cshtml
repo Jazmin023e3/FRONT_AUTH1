@@ -1,8 +1,8 @@
 ﻿@{
     ViewData["Title"] = "PlasticSys - Inicio";
 
-    // Revisa si la sesión tiene el token JWT
-    bool isAuthenticated = !string.IsNullOrEmpty(Context.Session.GetString("JWToken"));
+    // ELIMINADA toda la lógica de autenticación
+    // bool isAuthenticated = !string.IsNullOrEmpty(Context.Session.GetString("JWToken"));
 }
 
 @*
@@ -31,24 +31,20 @@
             PlasticSys es la plataforma oficial para la administración y trazabilidad de todos los procesos de reciclaje y fabricación de productos plásticos.
         </p>
 
-        @if (isAuthenticated)
-        {
-            <div class="alert alert-success mt-4 shadow-sm" role="alert">
-                ¡Has iniciado sesión exitosamente!
-            </div>
-            <a asp-controller="Usuario" asp-action="Index" class="btn btn-primary btn-lg shadow-lg mt-3">
-                <i class="fas fa-users"></i> Ver Lista de Usuarios
-            </a>
-        }
-        else
-        {
-            <div class="alert alert-warning mt-4 shadow-sm" role="alert">
-                Aún no has iniciado sesión.
-            </div>
-            <div class="d-grid gap-2 d-md-block mt-3">
-                <a asp-controller="Auth" asp-action="Login" class="btn btn-success btn-lg shadow">Iniciar Sesión</a>
-                <a asp-controller="Auth" asp-action="Registrar" class="btn btn-outline-primary btn-lg shadow-sm">Registrarse</a>
-            </div>
-        }
+        @* AQUÍ ESTARÁ EL CONTENIDO PRINCIPAL DE LA APLICACIÓN (EJ. LAS TABLAS) 
+
+            Como se eliminó la autenticación, ahora puedes mostrar directamente aquí el contenido 
+            que la aplicación debe ver por defecto (por ejemplo, un botón para ver los productos, o las tablas en sí).
+
+            Ejemplo de cómo podrías enlazar a una vista de tablas:
+        *@
+        <a asp-controller="Producto" asp-action="Index" class="btn btn-success btn-lg shadow-lg mt-3">
+            Ver Tablas de Productos
+        </a>
+
+        @*
+            Se eliminaron por completo los bloques @if (isAuthenticated) y @else 
+            que contenían los mensajes y los botones de Login y Registrar.
+        *@
     </div>
 </div>
